@@ -1,0 +1,4 @@
+api:
+  host: "${API_HOST}"
+
+test_email_namespace: "dev@example.com"

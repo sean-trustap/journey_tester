@@ -1,0 +1,22 @@
+- paths:
+    - include: "**/*.go"
+    - exclude: "**/*_test.go"
+    - exclude: "target/**"
+  comment_markers:
+    line: "//"
+    block: "/*"
+  allow:
+    # `gofmt` 1.19 satisfies this rule by default, so there's no need to check
+    # it. Moreover, `gofmt` 1.19 applies tab-based indentation to code in
+    # comments, which fails this rule, because the tabs replace the initial
+    # spaces. As such, we disable this rule on Go files.
+    - no_leading_space
+
+- paths:
+    - include: "**/*.sh"
+    - exclude: "target/**"
+  comment_markers:
+    line: "#"
+  allow:
+    # We allow trailing comments to work around the use of `$#` in Bash scripts.
+    - trailing_comment

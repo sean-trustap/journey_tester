@@ -1,0 +1,10 @@
+4d63.com/optional v0.2.0 h1:VtMa/Iy8Xn5JuIqJYwDScgBSBsZsKCwP7s35NiUB+8A=
+4d63.com/optional v0.2.0/go.mod h1:DBA8tAdkYkYbvRq1lK3FyDBBzioAJzZzQPC6Vj+a3jk=
+github.com/gofrs/uuid v4.4.0+incompatible h1:3qXRTX8/NbyulANqlc0lchS1gqAVxRgsuW1YrTJupqA=
+github.com/gofrs/uuid v4.4.0+incompatible/go.mod h1:b2aQJv3Z4Fp6yNu3cdSllBxTCLRxnplIgP/c0N/04lM=
+github.com/trustap/service_template v0.0.0-20250326143350-5f4d8c5bcd59 h1:RaEBE6VzNBVHFbr3lXg0jS1A+8RtCsP5/D8ew6VF2BE=
+github.com/trustap/service_template v0.0.0-20250326143350-5f4d8c5bcd59/go.mod h1:BHjxxbphCeIc3UwD4+WSHi4RMXkkYTGlUyzSDdLY/1s=
+gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405 h1:yhCVgyC4o1eVCa2tZl7eS0r+SDo693bJlVdllGtEeKM=
+gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405/go.mod h1:Co6ibVJAznAaIkqp8huTwlJQCZ016jof/cbN4VW5Yz0=
+gopkg.in/yaml.v3 v3.0.1 h1:fxVm/GzAzEWqLHuvctI91KS9hhNmmWOoWu0XTYJS7CA=
+gopkg.in/yaml.v3 v3.0.1/go.mod h1:K4uyk7z7BCEPqu6E+C64Yfv1cQ7kz7rIZviUmN+EgEM=

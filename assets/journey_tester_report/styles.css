@@ -1,0 +1,35 @@
+.scroll-panel {
+    overflow-y: scroll;
+    height: 100vh;
+}
+
+.journey-nav .row {
+    padding: 15px;
+    margin-left: 5px;
+}
+
+pre {
+    margin-bottom: 0;
+}
+
+.list-group-item-danger.list-group-item-action.active {
+    color: #fff;
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+.list-group-item-light.list-group-item-action.active {
+    color: #fff;
+    background-color: #4e76a3;
+    border-color: #4e76a3;
+}
+
+.list-group-item-light.list-group-item-action.active .timing {
+    font-size: 0.8rem;
+    color: #ffffff;
+}
+
+.timing {
+    font-size: 0.8rem;
+    color: #a1830a;
+}

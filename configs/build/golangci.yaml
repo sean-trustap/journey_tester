@@ -1,0 +1,53 @@
+version: "2"
+linters:
+  default: none
+
+  enable:
+    - asciicheck
+    - copyloopvar
+    - err113
+    - errcheck
+    - errorlint
+    - exhaustive
+    - gochecknoinits
+    - govet
+    - ineffassign
+    - nakedret
+    - prealloc
+    - predeclared
+    - staticcheck
+    - testpackage
+    - thelper
+    - unconvert
+    - unparam
+    - unused
+    - whitespace
+    - wrapcheck
+
+  settings:
+    exhaustive:
+      default-signifies-exhaustive: true
+
+  exclusions:
+    generated: lax
+    presets:
+      - comments
+      - common-false-positives
+      - legacy
+      - std-error-handling
+    rules:
+      - linters:
+          - err113
+        text: do not define dynamic errors
+    paths:
+      - third_party$
+      - builtin$
+      - examples$
+
+formatters:
+  exclusions:
+    generated: lax
+    paths:
+      - third_party$
+      - builtin$
+      - examples$

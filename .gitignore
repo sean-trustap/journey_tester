@@ -1,0 +1,6 @@
+# Output directory.
+target
+
+# Configuration files.
+configs/journey_tester.yaml
+test/envs/vars.env

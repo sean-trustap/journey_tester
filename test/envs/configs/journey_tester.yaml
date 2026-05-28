@@ -1,0 +1,4 @@
+api:
+  host: "http://testing.example.local"
+
+test_email_namespace: "dev@example.com"

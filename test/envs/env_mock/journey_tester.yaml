@@ -1,0 +1,4 @@
+# api:
+#   host: "http://localhost:8080"
+# 
+# test_email_namespace: "dev@example.com"

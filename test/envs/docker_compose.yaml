@@ -1,0 +1,73 @@
+# This file defines the core services used by test environments. Other
+# environments can defined additional services in their corresponding
+# `env_{env}/docker_compose.yaml` files.
+
+services:
+  api.example.local:
+    image: trustap/journey_tester.build:latest
+    init: true
+    working_dir: '/go/src/github.com/trustap/journey_tester'
+    command: |
+      go run tools/test_server/main.go config.yaml :80
+    healthcheck:
+      test: ["CMD", "curl", "http://localhost/heartbeat"]
+    volumes:
+      - type: volume
+        source: trustap.journey_tester.tmp_cache
+        target: /tmp/cache
+      - type: volume
+        source: trustap.journey_tester.mod_cache
+        target: /go/pkg
+      - type: volume
+        source: trustap.go_download_cache
+        target: /go/pkg/mod/cache/download
+      - type: bind
+        source: ../..
+        target: /go/src/github.com/trustap/journey_tester
+    env_file:
+      - ./vars.env
+    depends_on:
+      'db.example.local':
+        condition: service_healthy
+      'testing.example.local':
+        condition: service_healthy
+
+  db.example.local:
+    image: mysql:9.7.0
+    environment:
+      MYSQL_RANDOM_ROOT_PASSWORD: 'true'
+    volumes:
+      - type: bind
+        source: ./configs/dbs.sql
+        target: /docker-entrypoint-initdb.d/dbs.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "status", "--user=dev", "--password=dev_pass"]
+
+  testing.example.local:
+    image: trustap/journey_tester.build:latest
+    init: true
+    working_dir: '/go/src/github.com/trustap/journey_tester'
+    command: |
+      go run tools/test_server/main.go config.yaml :80
+    healthcheck:
+      test: ["CMD", "curl", "http://localhost/heartbeat"]
+    volumes:
+      - type: volume
+        source: trustap.journey_tester.tmp_cache
+        target: /tmp/cache
+      - type: volume
+        source: trustap.journey_tester.mod_cache
+        target: /go/pkg
+      - type: volume
+        source: trustap.go_download_cache
+        target: /go/pkg/mod/cache/download
+      - type: bind
+        source: ../..
+        target: /go/src/github.com/trustap/journey_tester
+
+volumes:
+  # These volumes are used to avoid re-downloading dependencies multiple times
+  # over subsequent runs. See `scripts/with_build_env.sh` for more details.
+  trustap.journey_tester.tmp_cache:
+  trustap.journey_tester.mod_cache:
+  trustap.go_download_cache:
