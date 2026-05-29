@@ -109,7 +109,7 @@ func (r *LoadReporter) AddJourneysQuantity(numJourneysStarted int) {
 	r.NumberJourneysStarted = numJourneysStarted
 }
 
-func (r *LoadReporter) OutputReport(printer Printer, reportAssetsDir, reportOutputDir string) error {
+func (r *LoadReporter) OutputReport(printer Printer, reportOutputDir string) error {
 	r.EndTime = time.Now()
 
 	err := os.Mkdir(reportOutputDir, journey_tester_report.FileModeDirOwnerOnly)

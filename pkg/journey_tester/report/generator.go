@@ -57,15 +57,15 @@ func newTestRunInfo(r *Reporter) *TestRunInfo {
 	}
 }
 
-func GenerateReports(printer Printer, r *Reporter, reportAssetsDir, reportOutputDir string) error {
+func GenerateReports(printer Printer, r *Reporter, reportOutputDir string) error {
 	info := newTestRunInfo(r)
 
-	err := GenerateFullReport(printer, info, reportAssetsDir, reportOutputDir)
+	err := GenerateFullReport(printer, info, reportOutputDir)
 	if err != nil {
 		return fmt.Errorf("failed to generate full report: %w", err)
 	}
 
-	err = GenerateSummaryReport(printer, info, reportAssetsDir, reportOutputDir)
+	err = GenerateSummaryReport(printer, info, reportOutputDir)
 	if err != nil {
 		return fmt.Errorf("failed to generate summary report: %w", err)
 	}
@@ -74,13 +74,13 @@ func GenerateReports(printer Printer, r *Reporter, reportAssetsDir, reportOutput
 	successID, failID := 0, 0
 	for _, j := range journeys {
 		if j.HasError {
-			err := GenerateJourneyReport(printer, j, failID, "f", reportAssetsDir, reportOutputDir)
+			err := GenerateJourneyReport(printer, j, failID, "f", reportOutputDir)
 			failID++
 			if err != nil {
 				return fmt.Errorf("failed to generate journey report for failure %d: %w", failID, err)
 			}
 		} else {
-			err := GenerateJourneyReport(printer, j, successID, "s", reportAssetsDir, reportOutputDir)
+			err := GenerateJourneyReport(printer, j, successID, "s", reportOutputDir)
 			successID++
 			if err != nil {
 				return fmt.Errorf("failed to generate journey report for success %d: %w", successID, err)
@@ -88,26 +88,26 @@ func GenerateReports(printer Printer, r *Reporter, reportAssetsDir, reportOutput
 		}
 	}
 
-	err = copyFile(reportAssetsDir+"/styles.css", reportOutputDir+"/styles.css")
+	err = copyFromEmbed("assets/styles.css", reportOutputDir+"/styles.css")
 	if err != nil {
-		return fmt.Errorf("failed to copy css file: %w", err)
+		return fmt.Errorf("failed to copy styles.css: %w", err)
 	}
 
-	err = copyFile(reportAssetsDir+"/summary_styles.css", reportOutputDir+"/summary_styles.css")
+	err = copyFromEmbed("assets/summary_styles.css", reportOutputDir+"/summary_styles.css")
 	if err != nil {
-		return fmt.Errorf("failed to copy css file: %w", err)
+		return fmt.Errorf("failed to copy summary_styles.css: %w", err)
 	}
 
 	return nil
 }
 
-func GenerateFullReport(printer Printer, i *TestRunInfo, reportAssetsDir, reportOutputDir string) error {
+func GenerateFullReport(printer Printer, i *TestRunInfo, reportOutputDir string) error {
 	f, err := os.Create(reportOutputDir + "/report.html")
 	if err != nil {
 		return fmt.Errorf("failed to create file: %w", err)
 	}
 
-	tmpl := template.Must(template.ParseFiles(reportAssetsDir + "/template.html"))
+	tmpl := template.Must(template.ParseFS(reportAssets, "assets/template.html"))
 	err = tmpl.Execute(f, *i)
 	if err != nil {
 		return fmt.Errorf("failed to generate html template: %w", err)
@@ -122,25 +122,25 @@ func GenerateFullReport(printer Printer, i *TestRunInfo, reportAssetsDir, report
 	return nil
 }
 
-func copyFile(src string, dst string) error {
-	data, err := os.ReadFile(src)
+func copyFromEmbed(embeddedPath, dst string) error {
+	data, err := reportAssets.ReadFile(embeddedPath)
 	if err != nil {
-		return fmt.Errorf("failed to read file: %v err: %w", src, err)
+		return fmt.Errorf("couldn't read embedded file '%s': %w", embeddedPath, err)
 	}
 	err = os.WriteFile(dst, data, FileModeFileOwnerOnly)
 	if err != nil {
-		return fmt.Errorf("failed to write file: %v err: %w", dst, err)
+		return fmt.Errorf("couldn't write '%s': %w", dst, err)
 	}
 	return nil
 }
 
-func GenerateSummaryReport(printer Printer, i *TestRunInfo, reportAssetsDir, reportOutputDir string) error {
+func GenerateSummaryReport(printer Printer, i *TestRunInfo, reportOutputDir string) error {
 	f, err := os.Create(reportOutputDir + "/summary.html")
 	if err != nil {
 		return fmt.Errorf("failed to create file: %w", err)
 	}
 
-	tmpl := template.Must(template.ParseFiles(reportAssetsDir + "/summary_report_template.html"))
+	tmpl := template.Must(template.ParseFS(reportAssets, "assets/summary_report_template.html"))
 	err = tmpl.Execute(f, *i)
 	if err != nil {
 		return fmt.Errorf("failed to generate html template: %w", err)
@@ -148,13 +148,13 @@ func GenerateSummaryReport(printer Printer, i *TestRunInfo, reportAssetsDir, rep
 	return nil
 }
 
-func GenerateJourneyReport(printer Printer, j *JourneyLog, index int, status, reportAssetsDir, reportOutputDir string) error {
+func GenerateJourneyReport(printer Printer, j *JourneyLog, index int, status, reportOutputDir string) error {
 	f, err := os.Create(reportOutputDir + "/report-" + status + "-" + strconv.Itoa(index) + ".html")
 	if err != nil {
 		return fmt.Errorf("failed to create file: %w", err)
 	}
 
-	tmpl := template.Must(template.ParseFiles(reportAssetsDir + "/journey_template.html"))
+	tmpl := template.Must(template.ParseFS(reportAssets, "assets/journey_template.html"))
 	err = tmpl.Execute(f, *j)
 	if err != nil {
 		return fmt.Errorf("failed to generate html template: %w", err)

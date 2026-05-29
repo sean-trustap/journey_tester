@@ -54,12 +54,12 @@ func Main(journeys *Journeys) (testResult, error) {
 		return TestResultFail, fmt.Errorf("couldn't run phases: %w", err)
 	}
 	if fc.loadTesting {
-		err = lr.OutputReport(fc.loadPrinter, "assets/journey_tester_report", "target/journey_tester")
+		err = lr.OutputReport(fc.loadPrinter, "target/journey_tester")
 		if err != nil {
 			return TestResultFail, fmt.Errorf("couldn't output report: %w", err)
 		}
 	} else {
-		err = r.OutputReport(printer, "assets/journey_tester_report", "target/journey_tester")
+		err = r.OutputReport(printer, "target/journey_tester")
 		if err != nil {
 			return TestResultFail, fmt.Errorf("couldn't output report: %w", err)
 		}

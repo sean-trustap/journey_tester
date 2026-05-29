@@ -141,7 +141,7 @@ func (r *Reporter) AddJourneyLogs(jls []*JourneyLog) {
 	}
 }
 
-func (r *Reporter) OutputReport(printer Printer, reportAssetsDir, reportOutputDir string) error {
+func (r *Reporter) OutputReport(printer Printer, reportOutputDir string) error {
 	r.EndTime = time.Now()
 	WriteReportToStdOut(printer, r)
 
@@ -156,7 +156,7 @@ func (r *Reporter) OutputReport(printer Printer, reportAssetsDir, reportOutputDi
 	if err != nil {
 		return fmt.Errorf("error writing report data to file: %w", err)
 	}
-	err = GenerateReports(printer, r, reportAssetsDir, reportOutputDir)
+	err = GenerateReports(printer, r, reportOutputDir)
 	if err != nil {
 		return fmt.Errorf("error generating report: %w", err)
 	}
