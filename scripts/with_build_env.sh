@@ -12,16 +12,6 @@
 # The `--docker-flag <flag>` argument passes flag to the `docker run` command
 # that starts the build environment.
 #
-# The `fwd-ssh-agent` flag makes the local SSH agent at `$SSH_AUTH_SOCK`
-# available within the build environment.
-#
-# The `fwd-known-hosts` uses the `known_hosts` file in `$HOME` available within
-# the build environment.
-#
-# The `known-hosts` argument makes the specified `known-hosts-file` available
-# within the build environment. Note that the `known-hosts-file` path must not
-# contain spaces.
-#
 # The `uid` and `gid` arguments run the command using the given user ID and
 # group ID.
 
