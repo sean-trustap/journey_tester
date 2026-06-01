@@ -40,9 +40,11 @@ main() {
         "$proj_dir" \
         "$tgt_compose_confs_dir"
 
-    proj_name="trustap_rest_api_${env}_test"
+    org_name="trustap"
+    proj_name="journey_tester"
+    compose_proj_name="${org_name}_${proj_name}_${env}_test"
     docker_compose_with_env \
-        "$proj_name" \
+        "$compose_proj_name" \
         "$proj_dir" \
         "$env" \
         "$tgt_compose_confs_dir" \
